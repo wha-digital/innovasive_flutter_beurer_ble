@@ -1,0 +1,25 @@
+name: example
+description: A new Flutter project.
+publish_to: "none"
+version: 0.2.11
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  dartx: ^1.2.0
+  flutter:
+    sdk: flutter
+  flutter_hooks: ^0.20.3
+  innovasive_flutter_beurer_ble:
+    path: ../
+  jiffy: ^6.2.1
+  permission_handler: ^11.0.1
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

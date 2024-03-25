@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "RUN",
+      "request": "launch",
+      "type": "dart",
+      "program": "example/lib/main.dart",
+    },
+    {
+      "name": "RUN --profile",
+      "request": "launch",
+      "type": "dart",
+      "program": "example/lib/main.dart",
+      "args": [
+        "--profile",
+      ]
+    },
+    {
+      "name": "RUN --release",
+      "request": "launch",
+      "type": "dart",
+      "program": "example/lib/main.dart",
+      "args": [
+        "--release",
+      ]
+    },
+  ],
+}

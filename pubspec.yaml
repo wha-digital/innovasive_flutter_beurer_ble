@@ -1,6 +1,6 @@
 name: innovasive_flutter_beurer_ble
 description: Helper to communicate Beurer devices via BLE
-version: 0.2.11
+version: 0.2.12
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -10,7 +10,7 @@ dependencies:
   device_info_plus: 9.1.0
   flutter:
     sdk: flutter
-  flutter_blue_plus: 1.10.5
+  flutter_blue_plus: ^1.32.12
   permission_handler: 11.0.1
 
 dev_dependencies:

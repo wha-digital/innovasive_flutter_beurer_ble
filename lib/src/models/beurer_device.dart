@@ -14,9 +14,9 @@ abstract class BeurerDevice {
     this.bluetoothDevice,
   );
 
-  String get name => bluetoothDevice.localName;
+  String get name => bluetoothDevice.platformName;
   String get id => bluetoothDevice.remoteId.toString();
-  String get nameWithId => '${bluetoothDevice.localName} (${bluetoothDevice.remoteId})';
+  String get nameWithId => '${bluetoothDevice.platformName} (${bluetoothDevice.remoteId})';
 
   /// Connect with device via BLE.
   ///
@@ -28,7 +28,7 @@ abstract class BeurerDevice {
       llog('🟢 Connected with $nameWithId');
     } on FlutterBluePlusException catch (e) {
       // Code (133):ANDROID_SPECIFIC_ERROR means connecting error. We will try to connect again.
-      if (e.errorCode == 133) connect();
+      if (e.code == 133) connect();
     } on PlatformException catch (e) {
       // if already connected means it's ready.
       if (e.code == 'already_connected') llog('🟡 Already connected with $nameWithId');
@@ -40,7 +40,7 @@ abstract class BeurerDevice {
   Future<void> pair() async {
     await connect();
     llog('🔵 Creating bond with $nameWithId');
-    await bluetoothDevice.pair();
+    await bluetoothDevice.createBond();
     llog('🟢 Bonded with $nameWithId');
   }
 

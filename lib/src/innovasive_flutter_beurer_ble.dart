@@ -42,8 +42,18 @@ class InnovasiveFlutterBeurerBle {
       }
 
       // Android <= 11
-      final permission = await Permission.bluetooth.request();
-      return permission == PermissionStatus.granted;
+      final results = <Permission, PermissionStatus>{};
+      final permission1 = await Permission.bluetooth.request();
+      final permission2 = await Permission.location.request();
+
+      results[Permission.bluetoothConnect] = permission1;
+      results[Permission.bluetoothAdvertise] = permission2;
+
+      if (results.containsValue(PermissionStatus.denied) || results.containsValue(PermissionStatus.permanentlyDenied)) {
+        return false;
+      }
+
+      return true;
     }
 
     if (Platform.isIOS) {
@@ -84,26 +94,26 @@ class InnovasiveFlutterBeurerBle {
 
     FlutterBluePlus.scanResults.listen((results) {
       for (ScanResult r in results) {
-        if (!_bleDevices.value.contains(r.device) && r.device.platformName != 'unknown') {
+        if (!_bleDevices.value.contains(r.device) && r.device.localName != 'unknown') {
           _bleDevices.value = _bleDevices.value.toList()..add(r.device);
 
-          if (r.device.platformName == SupportBeurerDevice.PO60.name) {
+          if (r.device.localName == SupportBeurerDevice.PO60.name) {
             scannedDevices.value = scannedDevices.value.toList()..add(PO60Connector(r.device));
             onScanned?.call(scannedDevices.value);
           }
-          if (r.device.platformName == SupportBeurerDevice.FT95.name) {
+          if (r.device.localName == SupportBeurerDevice.FT95.name) {
             scannedDevices.value = scannedDevices.value.toList()..add(FT95Connector(r.device));
             onScanned?.call(scannedDevices.value);
           }
-          if (r.device.platformName == SupportBeurerDevice.BM77.name) {
+          if (r.device.localName == SupportBeurerDevice.BM77.name) {
             scannedDevices.value = scannedDevices.value.toList()..add(BM77Connector(r.device));
             onScanned?.call(scannedDevices.value);
           }
-          if (r.device.platformName == SupportBeurerDevice.BF600.name) {
+          if (r.device.localName == SupportBeurerDevice.BF600.name) {
             scannedDevices.value = scannedDevices.value.toList()..add(BF600Connector(r.device));
             onScanned?.call(scannedDevices.value);
           }
-          if (r.device.platformName.contains(SupportBeurerDevice.GL50.name)) {
+          if (r.device.localName.contains(SupportBeurerDevice.GL50.name)) {
             scannedDevices.value = scannedDevices.value.toList()..add(GL50Connector(r.device));
             onScanned?.call(scannedDevices.value);
           }
@@ -125,11 +135,11 @@ class InnovasiveFlutterBeurerBle {
     final bonded = <BeurerDevice>[];
 
     for (final d in devices) {
-      if (d.platformName == SupportBeurerDevice.PO60.name) bonded.add(PO60Connector(d));
-      if (d.platformName == SupportBeurerDevice.FT95.name) bonded.add(FT95Connector(d));
-      if (d.platformName == SupportBeurerDevice.BM77.name) bonded.add(BM77Connector(d));
-      if (d.platformName == SupportBeurerDevice.BF600.name) bonded.add(BF600Connector(d));
-      if (d.platformName.contains(SupportBeurerDevice.GL50.name)) bonded.add(GL50Connector(d));
+      if (d.localName == SupportBeurerDevice.PO60.name) bonded.add(PO60Connector(d));
+      if (d.localName == SupportBeurerDevice.FT95.name) bonded.add(FT95Connector(d));
+      if (d.localName == SupportBeurerDevice.BM77.name) bonded.add(BM77Connector(d));
+      if (d.localName == SupportBeurerDevice.BF600.name) bonded.add(BF600Connector(d));
+      if (d.localName.contains(SupportBeurerDevice.GL50.name)) bonded.add(GL50Connector(d));
     }
 
     return bonded;

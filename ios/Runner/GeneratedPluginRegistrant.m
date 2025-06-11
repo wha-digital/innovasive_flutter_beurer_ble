@@ -12,10 +12,10 @@
 @import device_info_plus;
 #endif
 
-#if __has_include(<flutter_blue_plus_darwin/FlutterBluePlusPlugin.h>)
-#import <flutter_blue_plus_darwin/FlutterBluePlusPlugin.h>
+#if __has_include(<flutter_blue_plus/FlutterBluePlusPlugin.h>)
+#import <flutter_blue_plus/FlutterBluePlusPlugin.h>
 #else
-@import flutter_blue_plus_darwin;
+@import flutter_blue_plus;
 #endif
 
 #if __has_include(<permission_handler_apple/PermissionHandlerPlugin.h>)
